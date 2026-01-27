@@ -1,0 +1,57 @@
+<h2 class="text-xl font-bold mb-4 text-center">{{bookId ? "Update Book" : "Add Book"}}</h2>
+
+<form [formGroup]="bookForm" (ngSubmit)="submit()" class="grid gap-3 max-w-sm mx-auto shadow p-4">
+
+    <input type="text" placeholder="Enter title" formControlName="title" class="border p-2" />
+
+    @if (f['title'].invalid && (f['title'].touched || f['title'].dirty)) {
+    <div class="text-red-500 text-sm">
+        @if (f['title'].errors?.['required']) {
+        <div>Title is required</div>
+        }
+        @if (f['title'].errors?.['maxlength']) {
+            <div>Title should be max 50 characters</div>
+            }
+    </div>
+    }
+
+    <input type="text" placeholder="Enter author" formControlName="author" class="border p-2" />
+
+    @if (f['author'].invalid && (f['author'].touched || f['author'].dirty)) {
+    <div class="text-red-500 text-sm">
+        @if (f['author'].errors?.['required']) {
+        <div>Author is required</div>
+        }
+        @if (f['author'].errors?.['maxlength']) {
+            <div>Title should be max 50 characters</div>
+            }
+    </div>
+    }
+
+    <input type="number" placeholder="Enter year" formControlName="publicationYear" class="border p-2" />
+
+    @if (f['publicationYear'].invalid && (f['publicationYear'].touched || f['publicationYear'].dirty)) {
+    <div class="text-red-500 text-sm">
+        @if (f['publicationYear'].errors?.['required']) {
+        <div>Year is required</div>
+        }
+    </div>
+    }
+
+    <select formControlName="category" class=" border p-2">
+        <option value="">Select Category</option>
+        @for (cat of categories; track cat) {
+        <option [value]="cat">{{cat}}</option>
+        }
+    </select>
+    @if (f['category'].invalid && (f['category'].touched || f['category'].dirty)) {
+    <div class="text-red-500 text-sm">
+        Category is required
+    </div>
+    }
+
+    <button type="submit" [disabled]="bookForm.invalid" class="bg-green-500 text-white p-2">
+        {{bookId ? "Update" : "Add"}}
+    </button>
+
+</form>

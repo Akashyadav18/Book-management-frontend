@@ -1,0 +1,8 @@
+<div class=" flex justify-center items-center gap-4 border-b border-gray-300 h-20">
+    <a [routerLinkActiveOptions]="{exact:true}" routerLink="/" routerLinkActive="font-bold bg-red-400 p-1 text-white">Home</a>
+    <a routerLink="/create" routerLinkActive="font-bold bg-red-400 p-1 text-white">Create</a>
+    <button (click)="logout()" class="bg-red-500 text-white px-3 py-1 rounded">
+        Logout
+    </button>
+
+</div>

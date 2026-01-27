@@ -1,0 +1,38 @@
+<div class=" text-center">
+    <p>Login</p>
+    <form [formGroup]="loginForm" (ngSubmit)="submit()" class="grid gap-2 max-w-sm mx-auto shadow p-4">
+        <input type="text" placeholder="Username" formControlName="username" class=" border p-1">
+        @if (login['username'].invalid && login['username'].touched || login['username'].dirty) {
+        <div class="text-red-500 text-sm">
+            @if (login['username'].errors?.['required']) {
+            <div>Username is required</div>
+            }
+            @if (login['username'].errors?.['maxlength']) {
+            <div>Title should be max 30 characters</div>
+            }
+        </div>
+        }
+
+        <input type="password" placeholder="Password" formControlName="password" class=" border p-1">
+        @if (login['password'].invalid && login['password'].touched || login['password'].dirty) {
+        <div class="text-red-500 text-sm">
+            @if (login['password'].errors?.['required']) {
+            <div>Password is required</div>
+            }
+            @if (login['password'].errors?.['minlength']) {
+            <div>Password should be minimum 5 characters</div>
+            }
+        </div>
+        }
+
+        <button class=" border p-1 bg-sky-600" type="submit">Login</button>
+
+        <p class="text-center text-sm mt-2">
+            Don’t have an account?
+            <a routerLink="/register" class="text-blue-600 hover:underline">
+                Register
+            </a>
+        </p>
+    </form>
+
+</div>
