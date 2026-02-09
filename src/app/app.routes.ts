@@ -7,11 +7,32 @@ import { Register } from './auth/register/register';
 import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
-    { path: "", component: Home, canActivate: [authGuard] },
-    { path: "create", component: Create, canActivate: [authGuard] },
-    { path: "create/:id", component: Create, canActivate: [authGuard] },
-    { path: 'login', component: Login,  },
+    // { path: "", component: Home, canActivate: [authGuard] },
+    // { path: "create", component: Create, canActivate: [authGuard] },
+    // { path: "create/:id", component: Create, canActivate: [authGuard] },
+    // { path: 'login', component: Login,  },
+    // { path: 'register', component: Register },
+    // { path: '', redirectTo: 'login', pathMatch: 'full' },
+
+    // { path: '', redirectTo: 'login', pathMatch: 'full' },
+    
+    { path: 'login', component: Login },
     { path: 'register', component: Register },
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
-    { path: "**", component: PageNotFound }
+    { path: '', component: Home, canActivate: [authGuard] },
+    { path: 'create', component: Create, canActivate: [authGuard] },
+    { path: 'create/:id', component: Create, canActivate: [authGuard] },
+
+    {
+        path: ':city',
+        children: [
+            { path: 'login', component: Login },
+            { path: 'register', component: Register },
+
+            { path: '', component: Home, canActivate: [authGuard] },
+            { path: 'create', component: Create, canActivate: [authGuard] },
+            { path: 'create/:id', component: Create, canActivate: [authGuard] }
+        ]
+    },
+
+    { path: '**', component: PageNotFound }
 ];

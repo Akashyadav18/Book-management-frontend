@@ -27,4 +27,10 @@ export class AuthService {
       withCredentials: true
     });
   }
+
+  cities(){
+    return this.http.get('http://localhost:8080/api/city/getCities', {
+      withCredentials: true
+    })
+  }
 }

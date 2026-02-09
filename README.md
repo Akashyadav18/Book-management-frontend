@@ -7,53 +7,125 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 To start a local development server, run:
 
 ```bash
-ng serve
+ng serve# 📚 Book Management System
+
+## 📌 Project Overview
+
+This is a **Book Management System** developed using **Spring Boot**, **Angular**, and **PostgreSQL**.  
+The project demonstrates **full-stack development**, **session-based authentication & authorization**, and **schema-per-tenant multi-tenancy** based on **city**.
+
+The main goal of this project was to understand:
+- CRUD operations end-to-end
+- Backend + frontend integration
+- User-level authorization
+- Multi-tenant database architecture using PostgreSQL schemas
+
+---
+
+## 🛠️ Tech Stack
+
+### Backend
+- **Spring Boot**
+- **Spring Data JPA (Hibernate)**
+- **Lombok**
+- **PostgreSQL**
+- **Session-based Authentication**
+
+### Frontend
+- **Angular**
+- **TypeScript**
+- **HTML / CSS**
+
+### Database
+- **PostgreSQL**
+- **Schema-per-Tenant Multi-Tenancy**
+
+---
+
+## ✨ Features
+
+### 🔐 Authentication & Authorization
+- Session-based login system
+- Authenticated users can access protected APIs
+- Authorization rules:
+  - A user **can update/delete only their own books**
+  - A user **can view all books**, even those created by other users
+
+---
+
+### 📘 Book Management (CRUD)
+- Create a new book
+- View all available books
+- Update book details (only owner)
+- Soft delete books (logical deletion)
+
+---
+
+### 🏙️ Multi-Tenancy (Schema per Tenant)
+- Implemented **schema-based multi-tenancy**
+- Each **city represents a separate tenant**
+- Every tenant has its own PostgreSQL schema
+- Tenant is resolved dynamically based on the request (city)
+
+This ensures:
+- Data isolation between cities
+- Scalability for multiple tenants
+- Clean separation of data at database level
+
+---
+
+## 🗂️ Database Design
+
+- Each city has its **own schema**
+- Common tables exist inside each schema
+- Example schemas:
+  - `mumbai`
+  - `delhi`
+  - `bangalore`
+  - `pune`
+
+---
+
+## 🔄 Pagination
+
+Pagination is implemented in REST APIs to efficiently handle large datasets.
+
+Reference used for pagination implementation:  
+🔗 https://medium.com/@anarxocayev/multitenancy-in-java-with-spring-boot-and-hibernate-with-an-example-d3577eef2b2a
+🔗 https://towardsdev.com/multi-tenant-architecture-using-springboot-and-postgresql-d3d800e44ab0
+
+---
+
+## 🚀 How the Application Works (High Level)
+
+1. User logs in → session is created
+2. City (tenant) is identified from the request
+3. Hibernate switches schema dynamically
+4. CRUD operations are executed on the tenant-specific schema
+5. Authorization ensures users can modify only their own data
+
+---
+
+## 📚 What I Learned From This Project
+
+- Full-stack integration (Angular ↔ Spring Boot)
+- Session management and security in Spring Boot
+- Role-based and ownership-based authorization
+- PostgreSQL schema-level multi-tenancy
+- Clean API design with pagination
+- Real-world project structuring for GitHub
+
+---
+
+## 🧠 Future Improvements
+
+- JWT-based authentication
+- Role-based access (ADMIN / USER)
+- Search and filtering
+- Deployment using Docker
+- Centralized tenant management
+
+
+⭐ *This project was built for learning and hands-on understanding of enterprise-level backend concepts.*
+
 ```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

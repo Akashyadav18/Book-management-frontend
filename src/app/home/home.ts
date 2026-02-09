@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { BookService } from '../services/book';
 import { Book } from '../interfaces/Book';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -14,11 +14,13 @@ import { CommonModule } from '@angular/common';
 export class Home implements OnInit {
   bookData: Book[] = []
   loading = true;
+  city: string = '';
 
   constructor(private bookService: BookService,
     private toastr: ToastrService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute
   ) {
   }
 
@@ -34,6 +36,9 @@ export class Home implements OnInit {
     // })
     console.log("home page");
     this.getBook()
+
+    this.city = this.route.snapshot.params['city'] || '';
+    console.log('Tenant City:', this.city);
   }
 
   getBook() {
@@ -94,17 +99,37 @@ export class Home implements OnInit {
   //   this.router.navigate(['/create', id]);
   // }
 
+  // updateBook(book: Book) {
+  //   const loggedUserId = Number(sessionStorage.getItem('USER_ID'));
+  //   if (book.userId !== loggedUserId) {
+  //     this.toastr.error("You are not allowed to update this book");
+  //     return;
+  //   }
+  //   if (!loggedUserId) {
+  //     this.toastr.error("Please Login again")
+  //     return;
+  //   }
+  //   this.router.navigate(['/create', book.id]);
+  // }
   updateBook(book: Book) {
     const loggedUserId = Number(sessionStorage.getItem('USER_ID'));
+
     if (book.userId !== loggedUserId) {
       this.toastr.error("You are not allowed to update this book");
       return;
     }
+
     if (!loggedUserId) {
-      this.toastr.error("Please Login again")
+      this.toastr.error("Please Login again");
       return;
     }
-    this.router.navigate(['/create', book.id]);
+
+    // Navigate with city context
+    if (this.city) {
+      this.router.navigate(['/', this.city, 'create', book.id]);
+    } else {
+      this.router.navigate(['/create', book.id]);
+    }
   }
 
 }

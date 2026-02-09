@@ -17,13 +17,14 @@ export class Create {
   bookId: number | null = null
   categories = ['Programming', 'Fiction', 'Science', 'History', 'Biography', 'Comics', 'Other'];
 
+  city: string = '';
 
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private bookService: BookService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit() {
 
@@ -34,6 +35,8 @@ export class Create {
       category: ['', Validators.required]
     })
 
+    this.city = this.route.snapshot.params['city'] || '';
+
     this.bookId = Number(this.route.snapshot.paramMap.get('id'));
     if (this.bookId) {
       this.bookService.getSelectedBook(this.bookId).subscribe((res) => {
@@ -43,8 +46,8 @@ export class Create {
           publicationYear: res.publicationYear,
           category: res.category
         });
-        console.log("select book"+res);
-        
+        console.log("select book" + res);
+
       })
     }
   }
@@ -54,8 +57,8 @@ export class Create {
   }
 
   submit() {
-    
-    if(this.bookForm.invalid) return;
+
+    if (this.bookForm.invalid) return;
 
     if (this.bookId) {
       const updatedBook = {
@@ -66,7 +69,11 @@ export class Create {
         next: (res: any) => {
           console.log(res);
           this.toastr.success(res.message || "Book Updated Successfully")
-          this.router.navigate(['/'])
+          if (this.city) {
+            this.router.navigate(['/', this.city]);
+          } else {
+            this.router.navigate(['/']);
+          }
         },
         error: (err) => {
           this.toastr.error(err?.error.message || "Something went wrong ");
@@ -77,7 +84,11 @@ export class Create {
         next: (res: any) => {
           console.log(res);
           this.toastr.success(res.message || "Book Created Successfully")
-          this.router.navigate(['/'])
+          if (this.city) {
+            this.router.navigate(['/', this.city]);
+          } else {
+            this.router.navigate(['/']);
+          }
         },
         error: (err) => {
           this.toastr.error(err?.error.message || "Something went wrong ");
